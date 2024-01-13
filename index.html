@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Photomosaic Generator</title>
+    <style>
+        #loader {
+            display: none;
+        }
+
+        #result {
+            display: none;
+        }
+
+        #outputImage {
+            max-width: 100%;
+            max-height: 80vh;
+        }
+    </style>
+</head>
+<body>
+    <h1>Photomosaic Generator</h1>
+    <form id="mosaicForm" action="/generate_mosaic" method="post">
+        <button type="button" onclick="generateMosaic()">Generate Mosaic</button>
+        <div id="loader">Processing... Please wait.</div>
+        <div id="result">
+            <img id="outputImage" src="" alt="Mosaic Image">
+            <a id="downloadLink" href="" download="output.jpg">Download Mosaic</a>
+        </div>
+    </form>
+
+    <script>
+        function generateMosaic() {
+            var form = document.getElementById('mosaicForm');
+            var loader = document.getElementById('loader');
+            var result = document.getElementById('result');
+            var outputImage = document.getElementById('outputImage');
+            var downloadLink = document.getElementById('downloadLink');
+
+            loader.style.display = 'block';
+
+            var xhr = new XMLHttpRequest();
+            xhr.open(form.method, form.action, true);
+            xhr.responseType = 'blob';
+
+            xhr.onload = function () {
+                loader.style.display = 'none';
+                result.style.display = 'block';
+                outputImage.src = URL.createObjectURL(xhr.response);
+                downloadLink.href = outputImage.src;
+            };
+
+            xhr.send(new FormData(form));
+        }
+    </script>
+</body>
+</html>
