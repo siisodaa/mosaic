@@ -1,6 +1,3 @@
-Mosaic Image Generator README
------------------------------
-
 Overview:
 ---------
 This script generates a mosaic image from a pool of images. It matches small sections of a target input image with the most similar images from the pool based on average color, assembling a larger mosaic image as the output.
